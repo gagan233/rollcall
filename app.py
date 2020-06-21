@@ -1,5 +1,6 @@
 import sys
 import cv2
+import os
 import time
 from passlib.handlers.sha2_crypt import sha256_crypt
 
@@ -264,11 +265,21 @@ class MainWindow(QMainWindow):
             self.error_dialog.showMessage('Roll No field is empty!')
         else:
             flag, frame = self.video_capture.read()
-            roll_no = self.ui.roll_noEdit.text()
+            roll_no_cam = self.ui.roll_noEdit.text()
+            roll_no_cam = str(roll_no_cam)
+            # Create folder path and roll no folder
+            dir_path = './dataset/' + roll_no_cam
+            try:
+                os.mkdir(dir_path)
+            except Exception as e:
+                error = str(e)
+                # Throw error and show warning
+                self.error_dialog.showMessage(error)
+
             i = 10
             for i in range(i):
                 k = str(i)
-                path = './dataset/'+str(roll_no)+'/'+k+'.jpg'
+                path = './dataset/'+roll_no_cam+'/'+k+'.jpg'
                 if flag:
                     QtWidgets.QApplication.beep()
                     cv2.imwrite(path, frame)
