@@ -1,0 +1,21 @@
+# Requirements
+
+# For GUI
+# Pyqt5
+# PyQt5-sip
+# PyQt5-stubs
+
+# For Database
+# SQLAlchemy
+# passlib
+
+# For face recognition and camera
+# cffi
+# dlib
+# face-recognition
+# imutils
+# Pillow
+# opencv-python
+
+# For generating wheel
+# wheel
