@@ -3,12 +3,16 @@ from imutils.video import VideoStream
 import face_recognition
 import pickle
 import cv2
+import time
+from pydub import AudioSegment
+from pydub.playback import play
 from datetime import datetime
 from database import db_session
 from models import Attendance, Student
 
 
 def face_rec():
+    sound = AudioSegment.from_wav('thank_you.wav')              # Play sound
     day = datetime.now().strftime('%A')                         # Today day
     date = datetime.now().strftime('%d-%m-%Y')                  # Today date
     check_IN_Time = datetime.now().strftime('%X')               # Time
@@ -28,7 +32,7 @@ def face_rec():
 
     # Start camera
     vs = VideoStream(src=0).start()
-
+    time.sleep(1.0)
     # This list stores names of students which checked IN on morning
     # After clock_reset time, it is reset
     stuPresent = []
@@ -108,7 +112,8 @@ def face_rec():
                     else:
                         setattr(AM, 'arrived_on_time', 'No')
                         db_session.commit()
-
+                    play(sound)                 # Play Thank you sound
+                    time.sleep(2.0)             # Sleep
                     # If student checked IN append roll no to stu Present list
                     if stu_name not in stuPresent:
                         stuPresent.append(stu_name)
