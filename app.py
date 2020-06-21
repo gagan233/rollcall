@@ -34,6 +34,8 @@ class MainWindow(QMainWindow):
         # Timer
         self.timer = QTimer()
         self.timer.timeout.connect(self.view_cam)
+        self.ui.progressBar.setMaximum(100)
+        self.ui.progressBar.setValue(0)
 
         # Tables
         # Student
@@ -157,7 +159,11 @@ class MainWindow(QMainWindow):
 
     def encodeImages(self):
         # For encoding images
+        self.ui.encodeButton.setDisabled(True)
         encode_faces()
+        self.ui.progressBar.setValue(100)
+        self.error_dialog.showMessage('Model trained successfully!')
+        self.ui.encodeButton.setEnabled(True)
 
     # Student database START
     # To Add student in Database
