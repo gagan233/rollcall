@@ -40,10 +40,8 @@ class MainWindow(QMainWindow):
 
         # Tables
         # Student
-        self.no_of_rows = db_session.query(Student).count()
         self.ui.stutableWidget.setColumnCount(5)
         # Attendance
-        self.no_of_rows_att = db_session.query(Attendance).count()
         self.ui.atentableWidget.setColumnCount(12)
 
         # Table header
@@ -294,6 +292,7 @@ class MainWindow(QMainWindow):
     def viewSQLITE(self):
         self.ui.rollStuEdit.clear()
         self.ui.stutableWidget.setSortingEnabled(False)
+        self.no_of_rows = db_session.query(Student).count()
         self.ui.stutableWidget.setRowCount(self.no_of_rows)
 
         datalist = self.query()
@@ -332,6 +331,7 @@ class MainWindow(QMainWindow):
 
     # Attendance Report START
     def viewAttendance(self):
+        self.no_of_rows_att = db_session.query(Attendance).count()
         self.ui.rollAEdit.clear()
         self.ui.branchAEdit.clear()
         self.ui.atentableWidget.setSortingEnabled(False)

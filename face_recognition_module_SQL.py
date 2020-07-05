@@ -22,7 +22,7 @@ def face_rec():
     now = datetime.now()
     morning = now.replace(hour=8, minute=0, second=0)           # Morning
     evening = now.replace(hour=16, minute=0, second=0)          # Evening
-    clock_reset = now.replace(hour=18, minute=0, second=0)      # Clock reset time
+    clock_reset = now.replace(hour=20, minute=0, second=0)      # Clock reset time
 
     # Load face data from encoding.pickle
     data = pickle.loads(open('encodings.pickle', "rb").read())
@@ -105,7 +105,7 @@ def face_rec():
                     AM = Attendance.query.filter(Attendance.date == date, Attendance.roll_no == roll_no).first()
 
                     # if current time <= morning
-                    if now <= morning:
+                    if now >= morning:
                         # Insert into db if arrived late or not
                         setattr(AM, 'arrived_on_time', 'Yes')
                         db_session.commit()
@@ -121,7 +121,7 @@ def face_rec():
                     # If stu name exist in stu present list
                     elif stu_name in stuPresent:
                         # check if current time >= evening
-                        if now >= evening:
+                        if now <= evening:
                             setattr(AM, 'check_out', check_OUT_Time)
                             setattr(AM, 'left_on_time', 'Yes')
                             db_session.commit()
